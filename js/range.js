@@ -1,6 +1,6 @@
 class Range{
 
-    constructor(){
+    constructor(value){
         let _this = this;
         this.padding = 7;
         this.pressed = false;
@@ -9,10 +9,10 @@ class Range{
         this.thumb = document.createElement("span");
         this.track.appendChild(this.thumb);
         this.onChange = ()=>{};
-        this.value = 50;
-        this.thumb.style.left = "50%";
+        this.value = value || 50;
+        this.thumb.style.left = `${value || 50}%`;
         this._setupEvents();
-        return new Proxy(this,{set:(target,prop,val)=>{return _this._onChange(target,prop,val)}});
+       // return new Proxy(this,{set:(target,prop,val)=>{return _this._onChange(target,prop,val)}});
     }
 
     _setupEvents(){
@@ -34,7 +34,7 @@ class Range{
         };
     }
 
-    getAbsolutePosition(elm,percent){
+   getAbsolutePosition(elm,percent){
         let posStartElm = elm.getBoundingClientRect().left;
         let widthElm = elm.offsetWidth;
         return {
@@ -50,6 +50,11 @@ class Range{
         return false;
     }
 
+    setValue(value){
+        let pos = this.getAbsolutePosition(this.track,value);
+        let e = {pageX:(pos.withPadding)};
+        this.setThumbPos(e);
+    }
 
     trackMove(e){
         // e.preventDefault();
@@ -66,17 +71,19 @@ class Range{
     }
 
 
-    _onChange(target,property,value){
+   _onChange(target,property,value){
         target[property] = value;
-        if(property == "value"){
-            let e = {pageX:(this.getAbsolutePosition(this.track,value).withPadding)};
+        if(property === "value"){
+            let pos = this.getAbsolutePosition(this.track,value)
+            let e = {pageX:(pos.withPadding)};
             target.setThumbPos(e);
         }
         return true;
     }
 
 
-    setThumbPos(e){      
+    setThumbPos(e){
+
         let pos = this.getRelativePosition(this.track, e.pageX || e.changedTouches[0].pageX);
         if(pos.withPadding<=100 && pos.withPadding>=0){
             this.thumb.style.left = pos.withoutPadding+"%";
@@ -90,6 +97,7 @@ class Range{
                 
             this.thumb.style.left = pos.withoutPadding+"%";
             this.value = pos.withPadding;
+            this.onChange(e);
         }
     }
 }

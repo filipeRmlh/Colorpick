@@ -1,13 +1,14 @@
 
 .range{
-    border: 1px solid #333;
-    width: 100px;
+    /*border: 1px solid #333;*/
+    width: 100%;
     margin: 5px 0;
     position: relative;
     height: 15px;
+    border: 1px solid #aaa;
     border-radius: 10px;
     background-color: #ddd;
-    width: calc(100% - 2px);
+    box-sizing: border-box;
     background-repeat: repeat-y;
     overflow: hidden;
 }
@@ -15,7 +16,7 @@
     transition: filter 300ms ease-in-out;
     content: "";
     display: block;
-    filter: invert(0);
+    filter: invert(20%);
     height: 100%;
     position: relative;
     width: 12px;
@@ -32,38 +33,89 @@
     display: inline-flex;
     position: relative;
 
+
 }
 .colorpick>div{
+
     z-index: 1;
-    border: 1px solid #dddddd;
-    transition: max-height 200ms linear 700ms, z-index 200ms linear 900ms;
+    transition: max-height 200ms linear 700ms, z-index 200ms linear 900ms, box-shadow 200ms ease-in-out;
     overflow:hidden;
-    width: calc(100% - 10px);
-    max-height: calc(100% - 10px);
+    width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
     position: absolute;
-    padding: 4px;
-    border-radius: 5px;
-    background-color: #eee;
+    border-radius: 7px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.3);
 }
 .colorpick>div:hover,.colorpick>div:focus{
-    max-height:130px ;
+    max-height:200px;
     z-index: 2;
     transition: max-height 200ms linear 500ms;
 }
 .colorpick>div input:not([type=radio]){
-    
-    margin-bottom: 10px;
     text-align:center;
-    border: 1px solid #333;
-    border-radius: 5px;
-    width: calc(100% - 2px);
+    border: none;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
     padding: 0;
-    line-height: 25px;
+    line-height: 38px;
     font-size: 12pt;
     font-family: arial, sans-serif;
 }
 
+.colorpick>div>div{
+    padding: 5px;
+    background-color: #eee;
+}
+
+
+
 .colorpick>div input, .colorpick label{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
+
+}
+.colorpick label {
+    display: block;
+    margin: 0;
+    padding: 2px 4px;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    color:#444;
+    text-align: center;
+}
+
+.colorpick .chooseType:first-child label{
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border: 1px solid #777;
+}
+.colorpick .chooseType:last-child label{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #777;
+}
+
+.colorpick>div>div>div:not(.range){
+   display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.chooseType{
+    position: relative;
+    height: inherit;
+    width: 100%;
+}
+
+.chooseType input {
+    display: none;
+}
+
+.chooseType input:checked ~ label{
+    background-color: rgba(0,0,0,0.4);
+    color: #eee;
 }
