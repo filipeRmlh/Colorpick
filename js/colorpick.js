@@ -13,10 +13,9 @@ class Colorpick {
         this.radio = document.createElement('div');
         let idhex = uuid(), idhsl = uuid(), idrgb = uuid();
         let name=uuid();
-
         this.displayType=displayType || 'hsl';
         this.value = value || [180,50,50];
-
+        this.fireEvents=[];
         this.radio.innerHTML = `
             <div class="chooseType"><input ${this.displayType==='hex'?'checked':''} id='radio-${idhex}' name='tipo-${name}' type='radio' value='hex'><label for='radio-${idhex}'>hex</label></div>
             <div class="chooseType"><input ${this.displayType==='hsl'?'checked':''} id='radio-${idhsl}' name='tipo-${name}' type='radio' value='hsl'><label for='radio-${idhsl}'>hsl</label></div>
@@ -31,6 +30,14 @@ class Colorpick {
         return new Proxy(this,{set:(target,prop,val)=>{return _this._onChange(target,prop,val)}})
     }
 
+    _changeHandleCallback(e){
+        if(this.fireEvents['_changeHandleCallback']!==undefined){
+            for(let i=0; i< this.fireEvents['_changeHandleCallback'].length;i++){
+                if(this.fireEvents['_changeHandleCallback'][i]!==undefined)this.fireEvents['_changeHandleCallback'][i](e);
+            }
+        }
+
+    }
     
     _onChange(target,property,value){
         target[property] = value;
@@ -40,7 +47,10 @@ class Colorpick {
         return true;
     }
 
-
+    addEventListener(evt,callback){
+        if(this.fireEvents[`_${evt}HandleCallback`]===undefined)this.fireEvents[`_${evt}HandleCallback`]=[];
+        this.fireEvents[`_${evt}HandleCallback`].push(callback);
+    }
 
     setThumbsColors(){
         let lum = this.lRange.value < 50?"invert(100%)":"";
@@ -51,6 +61,9 @@ class Colorpick {
 
     setInputValue(){
         let out = this.value = [Math.round(this.hRange.value*3.6), Math.round(this.sRange.value), Math.round(this.lRange.value)];
+        let e={outbox:this.outercontent,target:this,value:this.value};
+        this._changeHandleCallback(e);
+
         switch(this.displayType){
             case 'hex': out = Colors.hsl2hex(out);
             break;
