@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 .range{
     /*border: 1px solid #333;*/
     width: 100%;
@@ -117,4 +118,134 @@
 .chooseType input:checked ~ label{
     background-color: rgba(0,0,0,0.4);
     color: #eee;
+=======
+
+[unselectable]{
+    -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.range{
+    /*border: 1px solid #333;*/
+    width: 100%;
+    margin: 5px 0;
+    position: relative;
+    height: 15px;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    background-color: #ddd;
+    box-sizing: border-box;
+    background-repeat: repeat-y;
+    overflow: hidden;
+}
+.range span{
+    transition: filter 300ms ease-in-out;
+    content: "";
+    display: block;
+    filter: invert(20%);
+    height: 100%;
+    position: relative;
+    width: 12px;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgaWQ9InN2ZzgiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAwIDI2Ljg2NDMyMSAyMy4yNjUxODQiCiAgIGhlaWdodD0iMjMuMjY1MTg0bW0iCiAgIHdpZHRoPSIyNi44NjQzMjFtbSI+CiAgPGRlZnMKICAgICBpZD0iZGVmczIiIC8+CiAgPG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhNSI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgICA8ZGM6dGl0bGU+PC9kYzp0aXRsZT4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPGcKICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzIuNjk0NDgsLTYyLjk5NTI0OSkiCiAgICAgaWQ9ImxheWVyMSI+CiAgICA8cGF0aAogICAgICAgZD0ibSA1OS41NTg4LDg2LjI2MDQzMiAtMTMuNDMyMTU5LDAgLTEzLjQzMjE2MSwwIDYuNzE2MDgxLC0xMS42MzI1OTEgNi43MTYwNzksLTExLjYzMjU5MiA2LjcxNjA4LDExLjYzMjU5MiB6IgogICAgICAgaWQ9InBhdGgzNzEzIgogICAgICAgc3R5bGU9ImZpbGw6IzAxMDUwNDtmaWxsLW9wYWNpdHk6MTtzdHJva2Utd2lkdGg6MC4yNjQ1ODMzMiIgLz4KICA8L2c+Cjwvc3ZnPgo=');
+    background-size: contain;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    transform: translateX(-50%);
+}
+/**********************************************/
+.colorpick{
+    height: 38px;
+    flex-grow: 1;
+    display: inline-flex;
+    position: relative;
+
+
+}
+.colorpick>div{
+
+    z-index: 1;
+    transition: max-height 200ms linear 700ms, z-index 200ms linear 900ms, box-shadow 200ms ease-in-out;
+    overflow:hidden;
+    width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 7px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.3);
+}
+.colorpick>div:hover,.colorpick>div:focus{
+    max-height:200px;
+    z-index: 2;
+    transition: max-height 200ms linear 500ms;
+}
+.colorpick>div input:not([type=radio]){
+    text-align:center;
+    border: none;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    line-height: 38px;
+    font-size: 12pt;
+    font-family: arial, sans-serif;
+}
+
+.colorpick>div>div{
+    padding: 5px;
+    background-color: #eee;
+}
+
+
+
+.colorpick>div input, .colorpick label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+
+}
+.colorpick label {
+    display: block;
+    margin: 0;
+    padding: 2px 4px;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    color:#444;
+    text-align: center;
+}
+
+.colorpick .chooseType:first-child label{
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border: 1px solid #777;
+}
+.colorpick .chooseType:last-child label{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #777;
+}
+
+.colorpick>div>div>div:not(.range){
+   display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.chooseType{
+    position: relative;
+    height: inherit;
+    width: 100%;
+}
+
+.chooseType input {
+    display: none;
+}
+
+.chooseType input:checked ~ label{
+    background-color: rgba(0,0,0,0.4);
+    color: #eee;
+>>>>>>> Stashed changes
 }

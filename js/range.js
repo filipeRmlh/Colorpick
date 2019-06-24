@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 class Range{
 
     constructor(value){
@@ -7,13 +10,22 @@ class Range{
         this.pressed = false;
         this.track = document.createElement("div");
         this.track.setAttribute("class","range");
+<<<<<<< Updated upstream
         this.thumb = document.createElement("span");
+=======
+        this.track.setAttribute("unselectable","on");
+        this.thumb = document.createElement("span");
+        this.thumb.setAttribute("unselectable", "on");
+>>>>>>> Stashed changes
         this.track.appendChild(this.thumb);
         this.onChange = ()=>{};
         this.value = value || 50;
         this.thumb.style.left = `${value || 50}%`;
         this._setupEvents();
+<<<<<<< Updated upstream
        // return new Proxy(this,{set:(target,prop,val)=>{return _this._onChange(target,prop,val)}});
+=======
+>>>>>>> Stashed changes
     }
 
     _setupEvents(){
@@ -52,6 +64,10 @@ class Range{
     }
 
     setValue(value){
+<<<<<<< Updated upstream
+=======
+        this.value = value;
+>>>>>>> Stashed changes
         let pos = this.getAbsolutePosition(this.track,value);
         let e = {pageX:(pos.withPadding)};
         this.setThumbPos(e);
@@ -64,13 +80,17 @@ class Range{
         return false;
     }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     trackEnd(e){
         // e.preventDefault();
         this.pressed = false;
         return false;
     }
 
+<<<<<<< Updated upstream
 
    _onChange(target,property,value){
         target[property] = value;
@@ -83,6 +103,8 @@ class Range{
     }
 
 
+=======
+>>>>>>> Stashed changes
     setThumbPos(e){
 
         let pos = this.getRelativePosition(this.track, e.pageX || e.changedTouches[0].pageX);
@@ -101,6 +123,7 @@ class Range{
             this.onChange(e);
         }
     }
+<<<<<<< Updated upstream
 =======
 class Range{
 
@@ -205,4 +228,6 @@ class Range{
         }
     }
 >>>>>>> 5172970057af984f012ace920b6dfa91fbb9f0a8
+=======
+>>>>>>> Stashed changes
 }
