@@ -7,15 +7,39 @@ class Colorpick {
         this._applyThumbFilter = true;
         this.container = container;
         this.content = document.createElement("div");
+<<<<<<< Updated upstream
+        this.outercontent = document.createElement("div");
+
         this.input = document.createElement("input");
         this.radio = document.createElement('div');
         let idhex = uuid(), idhsl = uuid(), idrgb = uuid();
+        let name=uuid();
         this.displayType=displayType || 'hsl';
-        this.value = value || [10,50,50];
+        this.value = value || [180,50,50];
+        this.fireEvents=[];
         this.radio.innerHTML = `
-            <span style='display:inline'><label for='radio-${idhex}'>hex</label><input ${this.displayType==='hex'?'checked':''} id='radio-${idhex}' name='tipo' type='radio' value='hex'></span>
-            <span  style='display:inline'><label for='radio-${idhsl}'>hsl</label><input ${this.displayType==='hsl'?'checked':''} id='radio-${idhsl}' name='tipo' type='radio' value='hsl'></span>
-            <span  style='display:inline'><label for='radio-${idrgb}'>rgb</label><input ${this.displayType==='rgb'?'checked':''} id='radio-${idrgb}' name='tipo' type='radio' value='rgb'></span>
+            <div class="chooseType"><input ${this.displayType==='hex'?'checked':''} id='radio-${idhex}' name='tipo-${name}' type='radio' value='hex'><label for='radio-${idhex}'>hex</label></div>
+            <div class="chooseType"><input ${this.displayType==='hsl'?'checked':''} id='radio-${idhsl}' name='tipo-${name}' type='radio' value='hsl'><label for='radio-${idhsl}'>hsl</label></div>
+            <div class="chooseType"><input ${this.displayType==='rgb'?'checked':''} id='radio-${idrgb}' name='tipo-${name}' type='radio' value='rgb'><label for='radio-${idrgb}'>rgb</label></div>
+=======
+        this.content.setAttribute("unselectable","on");
+        this.outercontent = document.createElement("div");
+        this.outercontent.setAttribute("unselectable","on");
+
+        this.input = document.createElement("input");
+        this.radio = document.createElement('div');
+        this.radio.setAttribute("unselectable","on");
+        let idhex = uuid(), idhsl = uuid(), idrgb = uuid();
+        let name=uuid();
+
+        this.displayType=displayType || 'hsl';
+        this.value = value || [180,50,50];
+
+        this.radio.innerHTML = `
+            <div unselectable="on" class="chooseType"><input unselectable="on" ${this.displayType === 'hex' ? 'checked' : ''} id='radio-${idhex}' name='tipo-${name}' type='radio' value='hex'><label unselectable="on" for='radio-${idhex}'>hex</label></div>
+            <div unselectable="on" class="chooseType"><input unselectable="on" ${this.displayType === 'hsl' ? 'checked' : ''} id='radio-${idhsl}' name='tipo-${name}' type='radio' value='hsl'><label unselectable="on" for='radio-${idhsl}'>hsl</label></div>
+            <div unselectable="on" class="chooseType"><input unselectable="on" ${this.displayType === 'rgb' ? 'checked' : ''} id='radio-${idrgb}' name='tipo-${name}' type='radio' value='rgb'><label unselectable="on" for='radio-${idrgb}'>rgb</label></div>
+>>>>>>> Stashed changes
         `;
         this.input.setAttribute("type",'text');
         this.hRange = new Range();
@@ -23,21 +47,38 @@ class Colorpick {
         this.lRange = new Range();
         this.setUpElements();
         this.setUpEvents();
-        this.setRangesValues(this.value);
-        this.setThumbsColors();
-        this.setInputColors();
-        this.setRangesColors();
-        this.setInputValue();
-        return new Proxy(this,{set:(target,prop,val)=>{return _this._onChange(target,prop,val)}});
+<<<<<<< Updated upstream
+        return new Proxy(this,{set:(target,prop,val)=>{return _this._onChange(target,prop,val)}})
     }
 
+    _changeHandleCallback(e){
+        if(this.fireEvents['_changeHandleCallback']!==undefined){
+            for(let i=0; i< this.fireEvents['_changeHandleCallback'].length;i++){
+                if(this.fireEvents['_changeHandleCallback'][i]!==undefined)this.fireEvents['_changeHandleCallback'][i](e);
+            }
+        }
+
+    }
     
     _onChange(target,property,value){
         target[property] = value;
-        if(property == "value"){
+        if(property === "value"){
             this.setRangesValues(value);
         }
         return true;
+    }
+
+    addEventListener(evt,callback){
+        if(this.fireEvents[`_${evt}HandleCallback`]===undefined)this.fireEvents[`_${evt}HandleCallback`]=[];
+        this.fireEvents[`_${evt}HandleCallback`].push(callback);
+=======
+        setTimeout(()=>this.setValue(this.value),500);
+    }
+
+    setValue(value){
+        this.value = value;
+        this.setRangesValues(value);
+>>>>>>> Stashed changes
     }
 
     setThumbsColors(){
@@ -49,6 +90,12 @@ class Colorpick {
 
     setInputValue(){
         let out = this.value = [Math.round(this.hRange.value*3.6), Math.round(this.sRange.value), Math.round(this.lRange.value)];
+<<<<<<< Updated upstream
+        let e={outbox:this.outercontent,target:this,value:this.value};
+        this._changeHandleCallback(e);
+
+=======
+>>>>>>> Stashed changes
         switch(this.displayType){
             case 'hex': out = Colors.hsl2hex(out);
             break;
@@ -113,18 +160,23 @@ class Colorpick {
 
 
     setUpElements(){
-        this.container.appendChild(this.content);
-        this.content.appendChild(this.input);
+        this.outercontent.appendChild(this.input);
         this.content.appendChild(this.hRange.track);
         this.content.appendChild(this.sRange.track);
         this.content.appendChild(this.lRange.track);
         this.content.appendChild(this.radio);
+        this.outercontent.appendChild(this.content);
+        this.container.appendChild(this.outercontent);
     }
 
     setRangesValues(hsl){
-        this.hRange.value = hsl[0]/3.6;
-        this.sRange.value = hsl[1];
-        this.lRange.value = hsl[2];
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
+            this.hRange.setValue(hsl[0]/3.6);
+            this.sRange.setValue(hsl[1]);
+            this.lRange.setValue(hsl[2]);
     }
 
     setRangesColors(){
@@ -171,7 +223,7 @@ class Colorpick {
         this.sRange.onChange = (e)=>{ return _this.sRangeChangeHandle(e); };
         this.lRange.onChange = (e)=>{ return _this.lRangeChangeHandle(e); };
         this.input.addEventListener("change",(e)=>{_this.inputChangeHandle(e)});
-        this.content.querySelectorAll('[name=tipo]').forEach((elm)=>{
+        this.content.querySelectorAll('[type=radio]').forEach((elm)=>{
             elm.addEventListener("change",(e)=>{ return _this.changeType(e)})
         })
     }
