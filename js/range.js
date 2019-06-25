@@ -57,7 +57,6 @@ class Range{
    getAbsolutePosition(elm,percent){
         let posStartElm = elm.getBoundingClientRect().left;
         let widthElm = elm.offsetWidth;
-        console.log("postart",elm,posStartElm);
         return {
             withPadding: (percent*(widthElm - (2*this.padding) - 1)/100) + posStartElm + this.padding,
             withoutPadding: (percent*(widthElm - 1)/100) + posStartElm,
