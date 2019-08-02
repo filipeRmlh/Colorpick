@@ -2,9 +2,11 @@ class Range{
 
     constructor(value){
         let _this = this;
+        this.uuid = _colorpickUuid();
         this.padding = 7;
         this.pressed = false;
         this.track = document.createElement("div");
+        this.track.setAttribute("id",`range_${this.uuid}`)
         this.track.setAttribute("class","range");
         this.track.setAttribute("unselectable","on");
         this.thumb = document.createElement("span");
@@ -14,6 +16,23 @@ class Range{
         this.value = value || 50;
         this.thumb.style.left = `${value || 50}%`;
         this._setupEvents();
+    }
+
+    async init(){
+        let _this=this;
+        return await new Promise((resolve)=>{
+            let up = setTimeout(()=>{},0);
+            function timesup(){
+                clearTimeout(up);
+                up = setTimeout(()=>{
+                    if(_this.track!==undefined&&_this.track.getBoundingClientRect().left>0)
+                        resolve(_this);
+                    else 
+                        timesup();
+                },100);
+            }
+            timesup();
+        }); 
     }
 
     _setupEvents(){
@@ -72,8 +91,8 @@ class Range{
     }
 
     setThumbPos(e){
-
         let pos = this.getRelativePosition(this.track, e.pageX || e.changedTouches[0].pageX);
+        
         if(pos.withPadding<=100 && pos.withPadding>=0){
             this.thumb.style.left = pos.withoutPadding+"%";
             this.value = pos.withPadding;

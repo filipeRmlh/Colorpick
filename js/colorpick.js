@@ -1,6 +1,6 @@
-let uuid = ()=>{
+let _colorpickUuid = ()=>{
     return Math.random().toString(36).substr(2, 16);
-}
+};
 class Colorpick {
     constructor(container,value,displayType){
         let _this=this;
@@ -10,12 +10,12 @@ class Colorpick {
         this.content.setAttribute("unselectable","on");
         this.outercontent = document.createElement("div");
         this.outercontent.setAttribute("unselectable","on");
-
+        this.onChange=()=>{};
         this.input = document.createElement("input");
         this.radio = document.createElement('div');
         this.radio.setAttribute("unselectable","on");
-        let idhex = uuid(), idhsl = uuid(), idrgb = uuid();
-        let name=uuid();
+        let idhex = _colorpickUuid(), idhsl = _colorpickUuid(), idrgb = _colorpickUuid();
+        let name=_colorpickUuid();
 
         this.displayType=displayType || 'hsl';
         this.value = value || [180,50,50];
@@ -26,12 +26,31 @@ class Colorpick {
             <div unselectable="on" class="chooseType"><input unselectable="on" ${this.displayType === 'rgb' ? 'checked' : ''} id='radio-${idrgb}' name='tipo-${name}' type='radio' value='rgb'><label unselectable="on" for='radio-${idrgb}'>rgb</label></div>
         `;
         this.input.setAttribute("type",'text');
+        
+        this.init();        
+        
+    }
+ 
+    async init(){
         this.hRange = new Range();
         this.sRange = new Range();
         this.lRange = new Range();
         this.setUpElements();
         this.setUpEvents();
-        setTimeout(()=>this.setValue(this.value),500);
+        await this.hRange.init();
+        await this.sRange.init();
+        await this.lRange.init();
+        this.setValue(this.value);   
+    }
+
+    _onChange(){
+        let e = {
+            value:this.value,
+            input:this.input,
+            typeView:this.radio.querySelector("[checked]").value,
+            outbox:this.container
+        };
+        this.onChange(e);
     }
 
     setValue(value){
@@ -107,7 +126,8 @@ class Colorpick {
             case 'hex':
                 this.setRangesValues(Colors.hex2hsl(out.value));
                 break;
-        }        
+        }
+        this._onChange();
     }
 
 
@@ -140,14 +160,16 @@ class Colorpick {
     hRangeChangeHandle(e){
         this.setInputColors();
         this.setRangesColors();
-        this.setInputValue()
+        this.setInputValue();
+        this._onChange();
     }
 
 
     sRangeChangeHandle(e){
         this.setInputColors();
         this.setRangesColors();
-        this.setInputValue()
+        this.setInputValue();
+        this._onChange();
     }
 
 
@@ -155,13 +177,15 @@ class Colorpick {
         this.setInputColors();
         this.setThumbsColors();
         this.setRangesColors();
-        this.setInputValue()
+        this.setInputValue();
+        this._onChange();
     }
 
 
     changeType(e){
         this.displayType = e.target.value;
         this.setInputValue();
+        this._onChange();
     }
 
 
