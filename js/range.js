@@ -2,7 +2,7 @@ class Range{
 
     constructor(value){
         let _this = this;
-        this.uuid = uuid();
+        this.uuid = _colorpickUuid();
         this.padding = 7;
         this.pressed = false;
         this.track = document.createElement("div");

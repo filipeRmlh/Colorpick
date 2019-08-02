@@ -1,6 +1,6 @@
-let uuid = ()=>{
+let _colorpickUuid = ()=>{
     return Math.random().toString(36).substr(2, 16);
-}
+};
 class Colorpick {
     constructor(container,value,displayType){
         let _this=this;
@@ -14,8 +14,8 @@ class Colorpick {
         this.input = document.createElement("input");
         this.radio = document.createElement('div');
         this.radio.setAttribute("unselectable","on");
-        let idhex = uuid(), idhsl = uuid(), idrgb = uuid();
-        let name=uuid();
+        let idhex = _colorpickUuid(), idhsl = _colorpickUuid(), idrgb = _colorpickUuid();
+        let name=_colorpickUuid();
 
         this.displayType=displayType || 'hsl';
         this.value = value || [180,50,50];
