@@ -74,7 +74,6 @@ class Range{
         this.value = value;
         let pos = this.getAbsolutePosition(this.track,value);
         let e = {pageX:(pos.withPadding)};
-        console.log(this.thumb,this.track,e);
         this.setThumbPos(e);
     }
 
